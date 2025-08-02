@@ -1,4 +1,48 @@
 local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local CoreGui = cloneref and cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui")
+
+-- Ekran ładowania
+local LoadingGui = Instance.new("ScreenGui")
+LoadingGui.Name = "RojterLoading"
+LoadingGui.IgnoreGuiInset = true
+LoadingGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+LoadingGui.Parent = CoreGui
+
+local Shade = Instance.new("Frame")
+Shade.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+Shade.BackgroundTransparency = 0.2
+Shade.Size = UDim2.new(1, 0, 1, 0)
+Shade.Position = UDim2.new(0, 0, 0, 0)
+Shade.Parent = LoadingGui
+
+local TypingLabel = Instance.new("TextLabel")
+TypingLabel.BackgroundTransparency = 1
+TypingLabel.Size = UDim2.new(1, 0, 1, 0)
+TypingLabel.Position = UDim2.new(0, 0, 0, 0)
+TypingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TypingLabel.Font = Enum.Font.GothamSemibold
+TypingLabel.TextSize = 38
+TypingLabel.Text = ""
+TypingLabel.TextStrokeTransparency = 0.7
+TypingLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+TypingLabel.Parent = Shade
+
+-- Animacja pisania "Created By Rojter"
+local textToType = "Created By Rojter"
+for i = 1, #textToType do
+    TypingLabel.Text = string.sub(textToType, 1, i)
+    wait(0.07)
+end
+
+wait(1.2)
+
+-- Animacja znikania
+TweenService:Create(Shade, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {BackgroundTransparency = 1}):Play()
+TweenService:Create(TypingLabel, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {TextTransparency = 1, TextStrokeTransparency = 1}):Play()
+wait(0.55)
+LoadingGui:Destroy()
+
 local setclip = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 local cloneref = cloneref or function(o) return o end
 local CoreGui = cloneref(game:GetService("CoreGui"))
